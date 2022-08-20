@@ -27,7 +27,8 @@ int main()
         {
             cout << "Current gen: " << population->getCurrentGen() << endl;
             cout << "Current best fitness: " << population->bestFitness() << endl;
-            cout << *(population->bestIndividual());
+            cout << "Current best fit puzzle: " << endl;
+            cout << *(population->bestIndividual()) << endl;
         }
         population->newGeneration();
         population->cull();
@@ -40,5 +41,9 @@ int main()
     cout << "Best fitness: " << population->bestFitness() << endl;
     //prints out best solution
     cout << *(population->bestIndividual());
+    //since windows automatically closes terminal when program is done running, cin keeps program running until you are done looking at it
+    string end;
+    cout << "Please type anything and press enter to end program" << endl;
+    cin >> end;
     return 0;
 }

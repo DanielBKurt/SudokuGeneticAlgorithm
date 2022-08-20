@@ -58,50 +58,24 @@ istream &operator>>(istream &input, Puzzle &puzzle)
 void Sudoku::fillNumbers(string numbers)
 {
     int count = 0;
-    for (int i = 0; i < numbers.size(), count < 81; i++) //loop through string until end of string or all numbers found
+    for (int i = 0; i < numbers.size() && count < 81; i++) //loop through string until end of string or all numbers found
     {
-        int value;
-        switch (numbers[i]) //switch case since numbers[i] is char not int
+        if (isdigit(numbers.at(i)))
         {
-            case '0':
-                value = 0;
-                break;
-            case '1':
-                value = 1;
-                break;
-            case '2':
-                value = 2;
-                break;
-            case '3':
-                value = 3;
-                break;
-            case '4':
-                value = 4;
-                break;
-            case '5':
-                value = 5;
-                break;
-            case '6':
-                value = 6;
-                break;
-            case '7':
-                value = 7;
-                break;
-            case '8':
-                value = 8;
-                break;
-            case '9':
-                value = 9;
-                break;
-            default: //non number char
-                value = -1;
-        }
-        if (value != -1) //true if numbers[i] is a number and not random char
-        {
+            int value = numbers.at(i) - '0';
             //count / 9 gets truncated, 47 % 9 = 5 remainder 2 so it goes in [5][2]
             this->setNumbers[count / 9][count % 9] = value;
             this->potentialSolution[count / 9][count % 9] = value; //fill both arrays
             count++;
         }
+    }
+    if (count != 81)
+    {
+        cout << "Error: invalid string with less than 81 numbers, only contains " << count << " numbers" << endl;
+        cout << "String can contain any characters except white spaces" << endl;
+        string newNumbers;
+        cout << "Please enter a new string with at least 81 numbers" << endl;
+        cin >> newNumbers;
+        fillNumbers(newNumbers);
     }
 }

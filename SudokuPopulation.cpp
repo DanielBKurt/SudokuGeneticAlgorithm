@@ -10,6 +10,8 @@ SudokuPopulation::SudokuPopulation(int popSize, int generations)
     this->factory = new SudokuFactory();
     shared_ptr<Puzzle> firstSudoku = factory->createPuzzle(); //creates starting puzzle
     originalPuzzle = firstSudoku;
+    cout << "Inputted puzzle: " << endl;
+    cout << *originalPuzzle << endl;
     //create first generation based off of input puzzle
     for (int i = 0; i < popSize; i++)
     {
