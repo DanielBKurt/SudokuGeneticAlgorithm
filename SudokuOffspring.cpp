@@ -16,14 +16,14 @@ shared_ptr<Puzzle> SudokuOffspring::makeOffspring(Puzzle& puzzle)
             newSudoku->setNumbers[x][y] = sudokuInput.setNumbers[x][y];
         }
     }
-    newSudoku->fitness = sudokuInput.fitness;
+    newSudoku->setFitness(sudokuInput.getFitness());
     for (int x = 0; x < 9; x++)
     {
         for (int y = 0; y < 9; y++)
         {
             if (newSudoku->setNumbers[x][y] == 0) //not set number
             {
-                int w = rand() % 100;
+                int w = rand() % 100; //0-99, w < x means x percent chance of changing
                 if (w < 4 || newSudoku->potentialSolution[x][y] == 0) //4% chance to change
                 {
                     newSudoku->potentialSolution[x][y] = rand() % 9 + 1;

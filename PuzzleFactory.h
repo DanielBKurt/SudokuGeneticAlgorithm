@@ -14,8 +14,10 @@ class PuzzleFactory
         //shared pointers because regular pointers led to memory issues that caused segmentation fault
         virtual shared_ptr<Puzzle> createPuzzle() = 0;
         virtual shared_ptr<Puzzle> createPuzzle(Puzzle& puzzle) = 0;
-        Fitness* fitness;
-        Reproduction* reproduction;
+        
+    protected:
+        unique_ptr<Fitness> fitness;
+        unique_ptr<Reproduction> reproduction;
 };
 
 #endif //PUZZLEFACTORY_H_

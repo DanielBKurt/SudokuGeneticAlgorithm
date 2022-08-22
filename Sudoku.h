@@ -3,6 +3,7 @@
 
 #include "Puzzle.h"
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -11,16 +12,14 @@ class Sudoku : public Puzzle
     public:
         Sudoku();
         ~Sudoku();
-        
-        //bool operators aren't used anymore since I had to change priority queue implementation 
-        // but I'm leaving them in case implementation changes again
-        bool operator>(const Puzzle &puzzle) const;
-        bool operator<(const Puzzle &puzzle) const;
         void fillNumbers(string numbers);
         void printNumbers();
+        void fillPuzzle(string numbers);
+        const int getFitness();
+        void setFitness(int fitness);
+        //not protected like variables in other classes because creating copies of them would significantly slow down program
         int potentialSolution[9][9]; //array that is altered
         int setNumbers[9][9]; //read from command line
-        void fillPuzzle(string numbers);
 
 };
 

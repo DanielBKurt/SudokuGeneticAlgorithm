@@ -13,17 +13,6 @@ Sudoku::~Sudoku()
 
 }
 
-bool Sudoku::operator>(const Puzzle &puzzle) const
-{
-    return this->fitness > puzzle.fitness;
-}
-
-bool Sudoku::operator<(const Puzzle &puzzle) const
-{
-    return this->fitness < puzzle.fitness;
-}
-
-
 ostream &operator<<(ostream &output, Puzzle &puzzle)
 {
     puzzle.printNumbers();
@@ -78,4 +67,14 @@ void Sudoku::fillNumbers(string numbers)
         cin >> newNumbers;
         fillNumbers(newNumbers);
     }
+}
+
+const int Sudoku::getFitness()
+{
+    return this->fitness;
+}
+
+void Sudoku::setFitness(int fitness)
+{
+    this->fitness = fitness;
 }

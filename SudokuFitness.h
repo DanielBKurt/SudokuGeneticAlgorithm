@@ -4,6 +4,7 @@
 #include "Puzzle.h"
 #include "Sudoku.h"
 #include "Fitness.h"
+#include <memory>
 
 using namespace std;
 

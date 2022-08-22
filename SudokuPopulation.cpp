@@ -7,15 +7,30 @@ SudokuPopulation::SudokuPopulation(int popSize, int generations)
     this->popSize = popSize;
     this->generations = generations;
     this->currentGen = 1; //constructor creates first gen by default, therefore start at 1
-    this->factory = new SudokuFactory();
-    shared_ptr<Puzzle> firstSudoku = factory->createPuzzle(); //creates starting puzzle
-    originalPuzzle = firstSudoku;
+    this->factory = make_unique<SudokuFactory>();
+    this->originalPuzzle = factory->createPuzzle(); //creates starting puzzle
     cout << "Inputted puzzle: " << endl;
     cout << *originalPuzzle << endl;
     //create first generation based off of input puzzle
     for (int i = 0; i < popSize; i++)
     {
-        shared_ptr<Puzzle> newSudoku = factory->createPuzzle(*firstSudoku); //create popSize number of offspring, first generation
+        shared_ptr<Puzzle> newSudoku = factory->createPuzzle(*originalPuzzle); //create popSize number of offspring, first generation
+        gen.push(newSudoku); //add each offspring to gen queue
+    }
+}
+SudokuPopulation::SudokuPopulation(int popSize, int generations, shared_ptr<Puzzle> original)
+{
+    this->popSize = popSize;
+    this->generations = generations;
+    this->currentGen = 1; //constructor creates first gen by default, therefore start at 1
+    this->factory = make_unique<SudokuFactory>();
+    this->originalPuzzle = original;
+    cout << "Inputted puzzle: " << endl;
+    cout << *originalPuzzle << endl;
+    //create first generation based off of input puzzle
+    for (int i = 0; i < popSize; i++)
+    {
+        shared_ptr<Puzzle> newSudoku = factory->createPuzzle(*original); //create popSize number of offspring, first generation
         gen.push(newSudoku); //add each offspring to gen queue
     }
 }
@@ -27,12 +42,17 @@ SudokuPopulation::~SudokuPopulation()
 
 int SudokuPopulation::bestFitness()
 {
-    return this->bestFitPuzzle->fitness;
+    return this->bestFitPuzzle->getFitness();
 }
 
 shared_ptr<Puzzle> SudokuPopulation::bestIndividual()
 {
     return this->bestFitPuzzle;
+}
+
+shared_ptr<Puzzle> SudokuPopulation::getOriginalPuzzle()
+{
+    return this->originalPuzzle;
 }
 
 void SudokuPopulation::cull()
@@ -46,14 +66,14 @@ void SudokuPopulation::cull()
             best.push(current);
             //checking if bestFitPuzzle is null doesn't work for some reason so the below if sees if this is first puzzle
             //if (first puzzle added) || (better than bestFitPuzzle)
-            if ((currentGen == 1 && best.size() == 1) || bestFitPuzzle->fitness > current->fitness)
+            if ((currentGen == 1 && best.size() == 1) || bestFitPuzzle->getFitness() > current->getFitness())
             {
                 bestFitPuzzle = current;
             }
         }
-        else if (best.top()->fitness > current->fitness) //is full, is current better fit than top of best?
+        else if (best.top()->getFitness() > current->getFitness()) //is full, is current better fit than top of best?
         {
-            if (bestFitPuzzle->fitness > current->fitness) //same logic as above
+            if (bestFitPuzzle->getFitness() > current->getFitness()) //same logic as above
             {
                 bestFitPuzzle = current;
             }

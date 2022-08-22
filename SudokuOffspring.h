@@ -4,6 +4,7 @@
 #include "Reproduction.h"
 #include "Puzzle.h"
 #include "Sudoku.h"
+#include <memory>
 
 using namespace std;
 

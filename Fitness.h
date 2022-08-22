@@ -2,6 +2,7 @@
 #define FITNESS_H_
 
 #include "Puzzle.h"
+#include <memory>
 
 using namespace std;
 
